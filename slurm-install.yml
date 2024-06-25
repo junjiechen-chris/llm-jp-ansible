@@ -1,0 +1,85 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    slurm_user: slurm
+    slurm_group: slurm
+
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - slurm-wlm
+          - munge
+          - cpufrequtils
+          - libmunge-dev
+          - libmunge2
+        state: present
+        update_cache: yes
+
+    - name: Create slurm user and group
+      group:
+        name: "{{ slurm_group }}"
+        state: present
+
+    - name: Create slurm user
+      user:
+        name: "{{ slurm_user }}"
+        group: "{{ slurm_group }}"
+        create_home: yes
+
+    - name: Ensure munge service is running
+      systemd:
+        name: munge
+        state: started
+        enabled: yes
+
+    - name: Copy Munge Key
+      copy:
+        src: "/home/chris/ansible/munge.key"
+        dest: "/etc/munge/munge.key"
+    
+    - name: Ensure munge service is restarted
+      systemd:
+        name: munge
+        state: restarted
+        enabled: yes
+
+    - name: Copy Slurm configuration files
+      copy:
+        src: "slurm_conf/slurm.conf"
+        dest: "/etc/slurm/slurm.conf"
+    
+    - name: Copy Prolog files
+      copy:
+        src: "slurm_conf/prolog.sh"
+        dest: "/etc/slurm/prolog.sh"
+        owner: slurm
+        group: slurm
+        mode: 755
+    
+    - name: Copy Gres files
+      copy:
+        src: "slurm_conf/gres.conf"
+        dest: "/etc/slurm/gres.conf"
+        owner: slurm
+        group: slurm
+        mode: 644
+
+    - name: Copy cgroup configuration files
+      copy:
+        src: "slurm_conf/cgroup.conf"
+        dest: "/etc/slurm/cgroup.conf"
+
+    - name: Ensure slurmd service is running
+      systemd:
+        name: slurmd
+        state: restarted
+        enabled: yes
+
+    - name: Ensure slurmctld service is running on master node
+      systemd:
+        name: slurmctld
+        state: restarted
+        enabled: yes
+      when: "'master-node' in inventory_hostname"
