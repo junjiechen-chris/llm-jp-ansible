@@ -3,8 +3,8 @@ master-node ansible_host=slurm-cpu0
 
 [slurm-nodes]
 slurm-gpu0 ansible_host=slurm-gpu0
-slurm-gpu1 ansible_host=slurm-gpu1
-slurm-gpu2 ansible_host=slurm-gpu2
+#slurm-gpu1 ansible_host=slurm-gpu1
+#slurm-gpu2 ansible_host=slurm-gpu2
 
 [all:vars]
 ansible_user=chris

@@ -17,27 +17,31 @@
         state: present
         update_cache: yes
 
-    - name: Create slurm user and group
-      group:
-        name: "{{ slurm_group }}"
-        state: present
+          #    - name: Create slurm user and group
+          #group:
+          #name: "{{ slurm_group }}"
+          #state: present
 
-    - name: Create slurm user
-      user:
-        name: "{{ slurm_user }}"
-        group: "{{ slurm_group }}"
-        create_home: yes
+          #- name: Create slurm user
+          #user:
+          #name: "{{ slurm_user }}"
+          #group: "{{ slurm_group }}"
+          #create_home: yes
 
-    - name: Ensure munge service is running
-      systemd:
-        name: munge
-        state: started
-        enabled: yes
+
+    - name: Create Munge Key
+      include_tasks: /home/chris/ansible/create-mungekey-sub.yml 
 
     - name: Copy Munge Key
       copy:
         src: "/home/chris/ansible/munge.key"
         dest: "/etc/munge/munge.key"
+    
+    - name: Ensure munge service is running
+      systemd:
+        name: munge
+        state: started
+        enabled: yes
     
     - name: Ensure munge service is restarted
       systemd:

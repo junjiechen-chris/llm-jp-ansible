@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Create Munge Key
+      ansible.builtin.command: /usr/sbin/mungekey
+      args:
+        creates: /etc/munge/munge.key
+
+    - name: Copy Munge Key to local repor
+      ansible.builtin.copy:
+        src: "/etc/munge/munge.key"
+        dest: "/home/chris/ansible/munge.key"
+        remote_src: yes
+      when: "'master-node' in inventory_hostname"
