@@ -16,26 +16,21 @@
           - libmunge2
         state: present
         update_cache: yes
-
-          #    - name: Create slurm user and group
-          #group:
-          #name: "{{ slurm_group }}"
-          #state: present
-
-          #- name: Create slurm user
-          #user:
-          #name: "{{ slurm_user }}"
-          #group: "{{ slurm_group }}"
-          #create_home: yes
-
+      when: "'master-node' not in inventory_hostname"
 
     - name: Create Munge Key
-      include_tasks: /home/chris/ansible/create-mungekey-sub.yml 
+      include_tasks: create-mungekey-sub.yml 
 
     - name: Copy Munge Key
       copy:
-        src: "/home/chris/ansible/munge.key"
+        src: "/tmp/{{ lookup('env', 'USER') }}/ansible/munge.key"
         dest: "/etc/munge/munge.key"
+    
+    - name: Copy Munge Key
+      ansible.builtin.file:
+        path: "/tmp/{{ lookup('env', 'USER') }}/ansible/munge.key"
+        state: absent
+      when: "'master-node' in inventory_hostname"
     
     - name: Ensure munge service is running
       systemd:
@@ -54,6 +49,18 @@
         src: "slurm_conf/slurm.conf"
         dest: "/etc/slurm/slurm.conf"
     
+    - name: Copy Host Files to Login
+      copy:
+        src: "slurm_conf/hosts_login"
+        dest: "/etc/hosts"
+      when: "'master-node' in inventory_hostname"
+    
+    - name: Copy Host Files to GPU Nodes
+      copy:
+        src: "slurm_conf/hosts_gpu"
+        dest: "/etc/hosts"
+      when: "'gpu-node' in inventory_hostname"
+    
     - name: Copy Prolog files
       copy:
         src: "slurm_conf/prolog.sh"
@@ -69,6 +76,7 @@
         owner: slurm
         group: slurm
         mode: 644
+      when: "'gpu-node' in inventory_hostname"
 
     - name: Copy cgroup configuration files
       copy:

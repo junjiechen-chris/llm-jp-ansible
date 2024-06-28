@@ -4,8 +4,8 @@ master-node ansible_host=login-node
 [gpu-nodes]
 gpu-node[0:15]# ansible_host=gpu-node[0:15]
 
-[cpu-nodes]
-cpu-node[0:3]# ansible_host=cpu-node[0:3]
+#[cpu-nodes]
+#cpu-node[0:3]# ansible_host=cpu-node[0:3]
 
 #slurm-gpu0 ansible_host=slurm-gpu0
 #slurm-gpu1 ansible_host=slurm-gpu1

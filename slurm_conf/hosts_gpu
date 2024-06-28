@@ -1,0 +1,66 @@
+127.0.0.1 localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# Addresses on the Ethernet network
+10.2.184.99     template-gpu
+
+#10.2.184.10 gpu-node0
+#10.2.184.11 gpu-node1
+#10.2.184.12 gpu-node2
+#10.2.184.13 gpu-node3
+#10.2.184.14 gpu-node4
+#10.2.184.15 gpu-node5
+#10.2.184.16 gpu-node6
+#10.2.184.17 gpu-node7
+#10.2.184.18 gpu-node8
+#10.2.184.19 gpu-node9
+#10.2.184.20 gpu-node10
+#10.2.184.21 gpu-node11
+#10.2.184.22 gpu-node12
+#10.2.184.23 gpu-node13
+#10.2.184.24 gpu-node14
+#10.2.184.25 gpu-node15
+
+# Addresses on the RDMA network
+10.130.184.99   template-gpu-rdma
+10.130.184.100 login-node
+
+#10.130.184.10 gpu-node-rdma0
+#10.130.184.11 gpu-node-rdma1
+#10.130.184.12 gpu-node-rdma2
+#10.130.184.13 gpu-node-rdma3
+#10.130.184.14 gpu-node-rdma4
+#10.130.184.15 gpu-node-rdma5
+#10.130.184.16 gpu-node-rdma6
+#10.130.184.17 gpu-node-rdma7
+#10.130.184.18 gpu-node-rdma8
+#10.130.184.19 gpu-node-rdma9
+#10.130.184.20 gpu-node-rdma10
+#10.130.184.21 gpu-node-rdma11
+#10.130.184.22 gpu-node-rdma12
+#10.130.184.23 gpu-node-rdma13
+#10.130.184.24 gpu-node-rdma14
+#10.130.184.25 gpu-node-rdma15
+
+10.130.184.10 gpu-node0
+10.130.184.11 gpu-node1
+10.130.184.12 gpu-node2
+10.130.184.13 gpu-node3
+10.130.184.14 gpu-node4
+10.130.184.15 gpu-node5
+10.130.184.16 gpu-node6
+10.130.184.17 gpu-node7
+10.130.184.18 gpu-node8
+10.130.184.19 gpu-node9
+10.130.184.20 gpu-node10
+10.130.184.21 gpu-node11
+10.130.184.22 gpu-node12
+10.130.184.23 gpu-node13
+10.130.184.24 gpu-node14
+10.130.184.25 gpu-node15
